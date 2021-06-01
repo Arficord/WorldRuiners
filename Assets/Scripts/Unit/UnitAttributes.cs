@@ -19,7 +19,7 @@ namespace My.Base.Unit
         public float Speed { get; set; }
         public float Dodge { get; set; }
         public float Accuracy { get; set; }
-        public float CriticalHit { get; set; }
+        public float CriticalHitChance { get; set; }
         public float CriticalHitMultiplier { get; set; } = 1.5f;
         
         public UnitAttributes(UnitAttributes copiedOriginal)
@@ -37,7 +37,7 @@ namespace My.Base.Unit
             Speed = copiedOriginal.Speed;
             Dodge = copiedOriginal.Dodge;
             Accuracy = copiedOriginal.Accuracy;
-            CriticalHit = copiedOriginal.CriticalHit;
+            CriticalHitChance = copiedOriginal.CriticalHitChance;
             CriticalHitMultiplier = copiedOriginal.CriticalHitMultiplier;
         }
         

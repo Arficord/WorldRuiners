@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueTextField: {fileID: 0}
-  progressImage: {fileID: 6603035130041488743}
+  progressImage: {fileID: 1489521900931724397}
 --- !u!1 &2945686842508345098
 GameObject:
   m_ObjectHideFlags: 0
