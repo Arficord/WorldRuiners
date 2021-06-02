@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace My.Base.Unit
+namespace My.Base.Units
 {
     public class UnitAttributes
     {
@@ -22,6 +22,8 @@ namespace My.Base.Unit
         public float CriticalHitChance { get; set; }
         public float CriticalHitMultiplier { get; set; } = 1.5f;
         
+        public UnitAttributes(){}
+        
         public UnitAttributes(UnitAttributes copiedOriginal)
         {
             Health = copiedOriginal.Health;
@@ -40,7 +42,5 @@ namespace My.Base.Unit
             CriticalHitChance = copiedOriginal.CriticalHitChance;
             CriticalHitMultiplier = copiedOriginal.CriticalHitMultiplier;
         }
-        
-        public UnitAttributes(){}
     }
 }

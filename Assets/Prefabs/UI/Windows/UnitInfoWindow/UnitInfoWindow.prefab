@@ -865,8 +865,8 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 291.6}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 300, y: 291.59998}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &3980126849909941688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,6 +882,7 @@ MonoBehaviour:
   healthBar: {fileID: 1285537097117647394}
   staminaBar: {fileID: 1285537096742887026}
   manaBar: {fileID: 1285537096182511739}
+  unitNameTextField: {fileID: 4096741284828678563}
   healthRegenerationTextField: {fileID: 4013070186928039433}
   staminaRegenerationTextField: {fileID: 8600808429507500769}
   manaRegenerationTextField: {fileID: 1429782463277358199}
@@ -894,6 +895,7 @@ MonoBehaviour:
   criticalChanceTextField: {fileID: 8256298785157147335}
   criticalMultiplierTextField: {fileID: 4921577397906934781}
   speedTextField: {fileID: 1043573067277813224}
+  levelTextField: {fileID: 4096741285418267362}
 --- !u!1 &4096741284668485077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,10 +3610,25 @@ PrefabInstance:
       propertyPath: m_textInfo.spaceCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2799215668765079054, guid: 2834848a2495f0843ab830d312055cda,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5991818587995538550, guid: 2834848a2495f0843ab830d312055cda,
         type: 3}
       propertyPath: m_Name
       value: Crit Mult (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915632186690063197, guid: 2834848a2495f0843ab830d312055cda,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051677905975994084, guid: 2834848a2495f0843ab830d312055cda,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2834848a2495f0843ab830d312055cda, type: 3}

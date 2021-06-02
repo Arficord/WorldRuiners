@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using My.Base.Unit;
+using My.Base.Units;
 using UnityEngine;
 
-namespace My.Base.Unit
+namespace My.Base.Units
 {
     public static class UnitFactory
     {

@@ -1,4 +1,4 @@
-﻿using My.Base.Unit;
+﻿using My.Base.Units;
 using My.UI.Utils;
 using TMPro;
 using UnityEngine;
@@ -10,6 +10,7 @@ namespace My.UI.Windows
         [SerializeField] private ProgressBar healthBar;
         [SerializeField] private ProgressBar staminaBar;
         [SerializeField] private ProgressBar manaBar;
+        [SerializeField] private TextMeshProUGUI unitNameTextField;
         [SerializeField] private TextMeshProUGUI healthRegenerationTextField;
         [SerializeField] private TextMeshProUGUI staminaRegenerationTextField;
         [SerializeField] private TextMeshProUGUI manaRegenerationTextField;
@@ -22,6 +23,7 @@ namespace My.UI.Windows
         [SerializeField] private TextMeshProUGUI criticalChanceTextField;
         [SerializeField] private TextMeshProUGUI criticalMultiplierTextField;
         [SerializeField] private TextMeshProUGUI speedTextField;
+        [SerializeField] private TextMeshProUGUI levelTextField;
 
         public void UpdateView(Unit unitToShow)
         {
@@ -32,6 +34,7 @@ namespace My.UI.Windows
             staminaBar.UpdateView(curAttributes.Stamina, baseAttributes.Stamina);
             manaBar.UpdateView(curAttributes.Mana, baseAttributes.Mana);
 
+            unitNameTextField.text = unitToShow.Name;
             healthRegenerationTextField.text = curAttributes.HealthRegeneration.ToString("+0.0");
             staminaRegenerationTextField.text = curAttributes.StaminaRegeneration.ToString("+0.0");
             manaRegenerationTextField.text = curAttributes.ManaRegeneration.ToString("+0.0");
@@ -44,6 +47,19 @@ namespace My.UI.Windows
             criticalChanceTextField.text = (curAttributes.CriticalHitChance).ToString("0.0%");
             criticalMultiplierTextField.text = curAttributes.CriticalHitMultiplier.ToString("0.0x");
             speedTextField.text = curAttributes.Speed.ToString("0.0");
+            levelTextField.text = unitToShow.Level.ToString();
+        }
+
+        public void Hide()
+        {
+            //TODO: Closing animation
+            gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            //TODO: Opening animation
+            gameObject.SetActive(true);
         }
     }
 }

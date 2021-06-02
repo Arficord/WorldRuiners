@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using My.Base.Battle;
+using My.UI.Windows;
+using UnityEngine;
+
+namespace My.UI
+{
+    public class BattleUI : MonoBehaviour
+    {
+        [SerializeField] private Camera raycastCamera;
+        [SerializeField] private UnitInfoWindow unitInfoWindow;
+
+        private RectTransform _unitInfoWindowTransform;
+
+        private void Start()
+        {
+            _unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
+        }
+
+        private void Update()
+        {
+            MouseRaycast();
+        }
+
+        private void MouseRaycast()
+        {
+            //if performance problems: do not update unitInfoWindow view every frame. Do events
+            //Use something like Physics2D.GetRayIntersectionNonAlloc (will be deprecated in a future build)
+            Vector2 mousePosition = Input.mousePosition;
+            Ray raycastRay = raycastCamera.ScreenPointToRay(mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(raycastRay);
+            
+            if (hit.transform!=null)
+            {
+                BattleUnit battleUnit = hit.transform.GetComponent<BattleUnit>();
+                if(battleUnit==null)
+                    return;
+                
+                _unitInfoWindowTransform.position = mousePosition;
+                unitInfoWindow.UpdateView(battleUnit.UnitModel);
+                unitInfoWindow.Show();
+            }
+            else
+            {
+                unitInfoWindow.Hide();
+            }
+        }
+        
+    }
+}

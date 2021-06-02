@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace My.Base.Unit
+namespace My.Base.Units
 {
     public enum UnitTypes
     {
