@@ -8,6 +8,14 @@ namespace My.Base.Battle
 {
     public class BattleUnit : MonoBehaviour
     {
+        [SerializeField] private SpriteRenderer spriteRenderer;
         public Unit UnitModel { get; set; }
+
+        public void InitLook(UnitTypes unitLookType)
+        {
+            Debug.Log($"Units/{unitLookType.ToString()}");
+            spriteRenderer.sprite = Resources.Load<Sprite>($"Units/{unitLookType.ToString()}");
+        }
+        
     }
 }

@@ -8,14 +8,16 @@ namespace My.Base.Units
     {
         public string Name { get; }
         public int Level { get; }
+        public UnitTypes UnitType { get; }
         public UnitAttributes BaseAttributes { get; }
         public UnitAttributes CurrentAttributes { get; }
 
-        public Unit(UnitAttributes attributes, string unitName, int level)
+        public Unit(UnitAttributes attributes, string unitName, UnitTypes unitType, int level)
         {
             BaseAttributes = attributes;
             CurrentAttributes = new UnitAttributes(BaseAttributes);
             Name = unitName;
+            UnitType = unitType;
             Level = level;
         }
         

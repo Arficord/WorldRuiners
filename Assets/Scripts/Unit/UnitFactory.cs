@@ -41,7 +41,7 @@ namespace My.Base.Units
                 CriticalHitChance = 0.1f
             };
             //TODO: add translation support
-            return new Unit(attributes, "Bandit Swordsman", level);
+            return new Unit(attributes, "Bandit Swordsman", UnitTypes.TestWarrior, level);
         }
         
         public static Unit GetNewTestMage(int level)
@@ -64,7 +64,7 @@ namespace My.Base.Units
                 CriticalHitMultiplier = 2,
             };
             //TODO: add translation support
-            return new Unit(attributes, "Bandit Mage", level);
+            return new Unit(attributes, "Bandit Mage", UnitTypes.TestMage, level);
         }
         
         public static Unit GetNewTestTank(int level)
@@ -85,7 +85,7 @@ namespace My.Base.Units
                 CriticalHitMultiplier = 2,
             };
             //TODO: add translation support
-            return new Unit(attributes, "Bandit Bastion", level);
+            return new Unit(attributes, "Bandit Bastion", UnitTypes.TestTank, level);
         }
         #endregion
     }
