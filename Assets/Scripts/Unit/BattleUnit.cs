@@ -10,12 +10,18 @@ namespace My.Base.Battle
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         public Unit UnitModel { get; set; }
+        public Team UnitTeam { get; set; }
+        public float BattleTimePlace { get; set; }
 
-        public void InitLook(UnitTypes unitLookType)
+        public void Initialize(Unit unitModel, Team unitTeam)
         {
-            Debug.Log($"Units/{unitLookType.ToString()}");
-            spriteRenderer.sprite = Resources.Load<Sprite>($"Units/{unitLookType.ToString()}");
+            UnitModel = unitModel;
+            UnitTeam = unitTeam;
         }
         
+        public void IncreaseTimePlaceByParameters()
+        {
+            BattleTimePlace += UnitModel.CurrentAttributes.Speed;
+        }
     }
 }

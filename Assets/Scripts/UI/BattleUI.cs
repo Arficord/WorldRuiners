@@ -12,11 +12,11 @@ namespace My.UI
         [SerializeField] private Camera raycastCamera;
         [SerializeField] private UnitInfoWindow unitInfoWindow;
 
-        private RectTransform _unitInfoWindowTransform;
+        private RectTransform unitInfoWindowTransform;
 
         private void Start()
         {
-            _unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
+            unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
         }
 
         private void Update()
@@ -38,7 +38,7 @@ namespace My.UI
                 if(battleUnit==null)
                     return;
                 
-                _unitInfoWindowTransform.position = mousePosition;
+                unitInfoWindowTransform.position = mousePosition;
                 unitInfoWindow.UpdateView(battleUnit.UnitModel);
                 unitInfoWindow.Show();
             }
