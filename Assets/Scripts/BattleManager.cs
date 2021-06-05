@@ -40,9 +40,9 @@ namespace My.Base.Battle
             //imitate Computer's play / Player input
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
                 currentTurnUnit = null;
                 isWaitingForUnitPlay = false;
-                currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
             }
         }
 

@@ -89,3 +89,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeFlowMarkPrefab: {fileID: 8752456624068549465, guid: 71ffe4b19793c774c800837c8c92128a,
     type: 3}
+  plankSize: 1000

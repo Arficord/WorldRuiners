@@ -9,16 +9,11 @@ namespace My.Base.Battle
     public class TimeFlowPlank : MonoBehaviour
     {
         [SerializeField] private TimeFlowMark timeFlowMarkPrefab;
-        private RectTransform transformCashed;
-        private float plankSize;
-        private void Awake()
-        {
-            transformCashed = GetComponent<RectTransform>();
-            plankSize = transformCashed.rect.width;
-        }
+        [SerializeField] private float plankSize;
 
         public void Initialize(List<BattleUnit> units)
         {
+            Transform transformCashed = transform;
             foreach (var unit in units)
             {
                 TimeFlowMark mark = Instantiate(timeFlowMarkPrefab, transformCashed);
