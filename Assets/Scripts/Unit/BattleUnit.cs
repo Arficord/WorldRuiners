@@ -11,7 +11,7 @@ namespace My.Base.Battle
         [SerializeField] private SpriteRenderer spriteRenderer;
         public Unit UnitModel { get; set; }
         public Team UnitTeam { get; set; }
-        public float BattleTimePlace { get; set; }
+        public float BattleActionTime { get; set; }
 
         public void Initialize(Unit unitModel, Team unitTeam)
         {
@@ -21,7 +21,7 @@ namespace My.Base.Battle
         
         public void IncreaseTimePlaceByParameters()
         {
-            BattleTimePlace += UnitModel.CurrentAttributes.Speed;
+            BattleActionTime += UnitModel.CurrentAttributes.Speed;
         }
     }
 }
