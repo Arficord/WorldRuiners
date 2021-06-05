@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using My.Base.Units;
+using My.UI;
 using My.UI.Windows;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace My.Base.Battle
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BattleFieldManager battleField;
+        [SerializeField] private BattleUI battleUI;
         private List<BattleUnit> unitsInBattle = new List<BattleUnit>();
 
         private BattleUnit currentTurnUnit = null;
@@ -30,6 +32,7 @@ namespace My.Base.Battle
             SpawnUnit(UnitTypes.TestTank, 59, Team.Second);
 
             StartCoroutine(BattleCycle());
+            battleUI.Initialize(unitsInBattle);
         }
 
         private void Update()
@@ -39,6 +42,7 @@ namespace My.Base.Battle
             {
                 currentTurnUnit = null;
                 isWaitingForUnitPlay = false;
+                currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
             }
         }
 
@@ -78,7 +82,6 @@ namespace My.Base.Battle
                 if (unit.BattleActionTime >= BATTLE_ACTION_TIME_CUP)
                 {
                     Debug.Log($"Currently moves {unit.UnitTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
-                    unit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
                     currentTurnUnit = unit;
                     isWaitingForUnitPlay = true;
                     return true;

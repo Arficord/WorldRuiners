@@ -11,7 +11,7 @@ namespace My.UI
     {
         [SerializeField] private Camera raycastCamera;
         [SerializeField] private UnitInfoWindow unitInfoWindow;
-
+        [SerializeField] private TimeFlowPlank timeFlowPlank;
         private RectTransform unitInfoWindowTransform;
 
         private void Start()
@@ -22,6 +22,11 @@ namespace My.UI
         private void Update()
         {
             MouseRaycast();
+        }
+
+        public void Initialize(List<BattleUnit> units)
+        {
+            timeFlowPlank.Initialize(units);
         }
 
         private void MouseRaycast()
