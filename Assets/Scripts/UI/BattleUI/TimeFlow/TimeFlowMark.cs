@@ -10,24 +10,25 @@ namespace My.Base.Battle
     public class TimeFlowMark : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI timeEventNameText;
-        private BattleUnit battleUnit;
         private RectTransform rectTransform;
+        private float maxPosition;
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
         }
 
-        public void Initialize(BattleUnit unit)
+        public void Initialize(BattleUnit unit, float moveRange)
         {
-            battleUnit = unit;
             timeEventNameText.text = unit.UnitModel.Name;
+            maxPosition = moveRange;
+            unit.OnBattleActionTimeChanged += UpdatePosition;
         }
 
         //Do events
-        public void UpdatePosition(float maxPosition)
+        public void UpdatePosition(float timePosition)
         {
-            float newXPosition = maxPosition < battleUnit.BattleActionTime ? maxPosition : battleUnit.BattleActionTime;
+            float newXPosition = maxPosition < timePosition ? maxPosition : timePosition;
             rectTransform.anchoredPosition = new Vector2(newXPosition, 0);
         }
     }

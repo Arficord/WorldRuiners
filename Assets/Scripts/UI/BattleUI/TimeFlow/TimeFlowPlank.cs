@@ -17,16 +17,7 @@ namespace My.Base.Battle
             foreach (var unit in units)
             {
                 TimeFlowMark mark = Instantiate(timeFlowMarkPrefab, transformCashed);
-                mark.Initialize(unit);
-            }
-        }
-
-        //test method replace with events
-        private void Update()
-        {
-            foreach (Transform child in transform)
-            {
-                child.GetComponent<TimeFlowMark>().UpdatePosition(plankSize);
+                mark.Initialize(unit, plankSize);
             }
         }
     }
