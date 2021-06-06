@@ -19,5 +19,23 @@ MonoBehaviour:
     m_Color: {r: 1, g: 1, b: 1, a: 1}
   - m_Name: Info
     m_Color: {r: 0.9811321, g: 0.9010256, b: 0.7719473, a: 1}
-  - m_Name: 
+  - m_Name: Unobservable
     m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - m_Name: Data
+    m_Color: {r: 0.9245283, g: 0.30003557, b: 0.30003557, a: 1}
+  - m_Name: Big data
+    m_Color: {r: 0.9056604, g: 0.7631019, b: 0.42207187, a: 1}
+  - m_Name: Positive data
+    m_Color: {r: 0.48798493, g: 0.7735849, b: 0.3751157, a: 1}
+  - m_Name: Window BG
+    m_Color: {r: 0.098039225, g: 0.10196079, b: 0.10588236, a: 1}
+  - m_Name: Window shadow
+    m_Color: {r: 0.25257593, g: 0.12929869, b: 0.3018868, a: 1}
+  - m_Name: Window empty space
+    m_Color: {r: 0, g: 0, b: 0, a: 1}
+  - m_Name: Health
+    m_Color: {r: 0.9568628, g: 0, b: 0.007843138, a: 1}
+  - m_Name: Stamina
+    m_Color: {r: 0.34189418, g: 0.8867924, b: 0.32961905, a: 1}
+  - m_Name: Mana
+    m_Color: {r: 0, g: 0.34117648, b: 0.8980393, a: 1}
