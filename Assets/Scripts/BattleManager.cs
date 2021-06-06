@@ -12,8 +12,7 @@ namespace My.Base.Battle
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BattleFieldManager battleField;
-        [SerializeField] private BattleUI battleUI;
-        private List<BattleUnit> unitsInBattle = new List<BattleUnit>();
+        public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
 
         private BattleUnit currentTurnUnit = null;
         private bool isWaitingForUnitPlay = false;
@@ -21,7 +20,8 @@ namespace My.Base.Battle
         private const float BATTLE_ACTION_TIME_CUP = 1000;
         private const float BATTLE_TICK_TIME = 0.1f;
 
-        private void Start()
+        //TODO:REMOVE. Test tempo method
+        private void Awake()
         {
             SpawnUnit(UnitTypes.TestMage, 12, Team.First);
             SpawnUnit(UnitTypes.TestWarrior, 34, Team.First);
@@ -31,21 +31,19 @@ namespace My.Base.Battle
             SpawnUnit(UnitTypes.TestWarrior, 30, Team.Second);
             SpawnUnit(UnitTypes.TestTank, 59, Team.Second);
 
-            StartCoroutine(BattleCycle());
-            battleUI.Initialize(unitsInBattle);
+            StartBattle();
         }
 
-        private void Update()
+        public void SkipTurn()
         {
-            //imitate Computer's play / Player input
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
-                currentTurnUnit = null;
-                isWaitingForUnitPlay = false;
-            }
+            EndTurn();    
         }
-
+        
+        private void StartBattle()
+        {
+            StartCoroutine(BattleCycle());
+        }
+        
         private IEnumerator BattleCycle()
         {
             while (true)
@@ -69,7 +67,7 @@ namespace My.Base.Battle
         private void ProceedBattleTick()
         {
             Debug.Log("Battle Tick");
-            foreach (var unit in unitsInBattle)
+            foreach (var unit in UnitsInBattle)
             {
                 unit.IncreaseTimePlaceByParameters();
             }
@@ -77,7 +75,7 @@ namespace My.Base.Battle
 
         private bool TryToGiveTurnToUnit()
         {
-            foreach (var unit in unitsInBattle)
+            foreach (var unit in UnitsInBattle)
             {
                 if (unit.BattleActionTime >= BATTLE_ACTION_TIME_CUP)
                 {
@@ -90,6 +88,19 @@ namespace My.Base.Battle
             return false;
         }
 
+        private void EndTurn()
+        {
+            if (currentTurnUnit == null)
+            {
+                Debug.LogError("Trying to end the turn. But current unit is missing!");
+                return;
+            }
+            currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
+            currentTurnUnit = null;
+            isWaitingForUnitPlay = false;
+        }
+        
+        //Tempo unit spawn method 
         private void SpawnUnit(UnitTypes unitType, int level, Team team)
         {
             SpawnUnit(UnitFactory.GetNewUnit(unitType, level), team);
@@ -105,7 +116,7 @@ namespace My.Base.Battle
             }
             BattleUnit battleUnit = Instantiate(loadedResource, placeToSpawn);
             battleUnit.Initialize(unit, team);
-            unitsInBattle.Add(battleUnit);
+            UnitsInBattle.Add(battleUnit);
         }
     }
 }

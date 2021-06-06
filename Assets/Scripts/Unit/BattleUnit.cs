@@ -19,10 +19,10 @@ namespace My.Base.Battle
             set
             {
                 battleActionTime = value;
-                OnBattleActionTimeChanged?.Invoke(battleActionTime);
+                OnBattleActionTimeChanged?.Invoke();
             }
         }
-        public Action<float> OnBattleActionTimeChanged;
+        public Action OnBattleActionTimeChanged;
         private float battleActionTime;
 
         public void Initialize(Unit unitModel, Team unitTeam)

@@ -9,14 +9,17 @@ namespace My.UI
 {
     public class BattleUI : MonoBehaviour
     {
+        [SerializeField] private BattleManager battleManager;
         [SerializeField] private Camera raycastCamera;
         [SerializeField] private UnitInfoWindow unitInfoWindow;
+        [SerializeField] private BattleActionMenu battleActionMenu;
         [SerializeField] private TimeFlowPlank timeFlowPlank;
         private RectTransform unitInfoWindowTransform;
 
         private void Start()
         {
             unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
+            Initialize();
         }
 
         private void Update()
@@ -24,11 +27,24 @@ namespace My.UI
             MouseRaycast();
         }
 
-        public void Initialize(List<BattleUnit> units)
+        public void ShowActionMenu(bool show)
         {
-            timeFlowPlank.Initialize(units);
+            if (show)
+            {
+                battleActionMenu.Show();
+            }
+            else
+            {
+                battleActionMenu.Hide();
+            }
         }
 
+        private void Initialize()
+        {
+            timeFlowPlank.Initialize(battleManager.UnitsInBattle);
+            battleActionMenu.Initialize(battleManager);
+        }
+        
         private void MouseRaycast()
         {
             //if performance problems: do not update unitInfoWindow view every frame. Do events

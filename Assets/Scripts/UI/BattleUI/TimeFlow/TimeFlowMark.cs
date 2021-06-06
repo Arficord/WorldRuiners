@@ -12,6 +12,7 @@ namespace My.Base.Battle
         [SerializeField] private TextMeshProUGUI timeEventNameText;
         private RectTransform rectTransform;
         private float maxPosition;
+        private BattleUnit battleUnit;
 
         private void Awake()
         {
@@ -20,16 +21,25 @@ namespace My.Base.Battle
 
         public void Initialize(BattleUnit unit, float moveRange)
         {
-            timeEventNameText.text = unit.UnitModel.Name;
+            battleUnit = unit;
+            timeEventNameText.text = battleUnit.UnitModel.Name;
             maxPosition = moveRange;
-            unit.OnBattleActionTimeChanged += UpdatePosition;
+            battleUnit.OnBattleActionTimeChanged += UpdatePosition;
         }
-
-        //Do events
-        public void UpdatePosition(float timePosition)
+        
+        public void UpdatePosition()
         {
+            float timePosition = battleUnit.BattleActionTime;
             float newXPosition = maxPosition < timePosition ? maxPosition : timePosition;
             rectTransform.anchoredPosition = new Vector2(newXPosition, 0);
+        }
+
+        private void OnDestroy()
+        {
+            if (battleUnit!=null)
+            {
+                battleUnit.OnBattleActionTimeChanged -= UpdatePosition;
+            }
         }
     }
 }
