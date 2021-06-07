@@ -89,6 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeEventNameText: {fileID: 3204389270248897142}
+  plankImage: {fileID: 3204389268969252823}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  currentColor: {r: 1, g: 0.70980394, b: 0.18431373, a: 1}
 --- !u!1 &3204389270248897128
 GameObject:
   m_ObjectHideFlags: 0

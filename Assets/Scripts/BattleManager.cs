@@ -79,15 +79,21 @@ namespace My.Base.Battle
             {
                 if (unit.BattleActionTime >= BATTLE_ACTION_TIME_CUP)
                 {
-                    Debug.Log($"Currently moves {unit.UnitTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
-                    currentTurnUnit = unit;
-                    isWaitingForUnitPlay = true;
+                    StartTurn(unit);
                     return true;
                 }
             }
             return false;
         }
 
+        private void StartTurn(BattleUnit unit)
+        {
+            Debug.Log($"Currently moves {unit.UnitTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
+            currentTurnUnit = unit;
+            isWaitingForUnitPlay = true;
+            currentTurnUnit.TurnStared();
+        }
+        
         private void EndTurn()
         {
             if (currentTurnUnit == null)
@@ -95,7 +101,8 @@ namespace My.Base.Battle
                 Debug.LogError("Trying to end the turn. But current unit is missing!");
                 return;
             }
-            currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP;
+            currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP; 
+            currentTurnUnit.TurnEnded();
             currentTurnUnit = null;
             isWaitingForUnitPlay = false;
         }

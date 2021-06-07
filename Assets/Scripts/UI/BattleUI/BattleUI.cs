@@ -15,7 +15,24 @@ namespace My.UI
         [SerializeField] private BattleActionMenu battleActionMenu;
         [SerializeField] private TimeFlowPlank timeFlowPlank;
         private RectTransform unitInfoWindowTransform;
-
+        private BattleUnit LookTarget
+        {
+            get => lookTarget;
+            set
+            {
+                if (lookTarget != null)
+                {
+                    LookTarget.UnselectView();
+                }
+                if (value != null)
+                {
+                    value.SelectView();
+                }
+                lookTarget = value;
+            }
+        }
+        private BattleUnit lookTarget;
+        
         private void Start()
         {
             unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
@@ -62,10 +79,12 @@ namespace My.UI
                 unitInfoWindowTransform.position = mousePosition;
                 unitInfoWindow.UpdateView(battleUnit.UnitModel);
                 unitInfoWindow.Show();
+                LookTarget = battleUnit;
             }
             else
             {
-                unitInfoWindow.Hide();
+                unitInfoWindow.Hide();    
+                LookTarget = null;
             }
         }
         
