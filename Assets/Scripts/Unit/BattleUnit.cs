@@ -11,8 +11,12 @@ namespace My.Base.Battle
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         public Unit UnitModel { get; set; }
-        public Team UnitTeam { get; set; }
-
+        public Team RealTeam { get; set; }
+        public Team MindedTeam { get; set; }
+        
+        public bool IsPlayerCanControl { get; set; }
+        public IUnitInput PlayInput { get; set; }
+        
         public float BattleActionTime
         {
             get=>battleActionTime;
@@ -34,15 +38,19 @@ namespace My.Base.Battle
         public void Initialize(Unit unitModel, Team unitTeam)
         {
             UnitModel = unitModel;
-            UnitTeam = unitTeam;
+            RealTeam = unitTeam;
+            MindedTeam = RealTeam;
+            //TODO: Must be calculated from parameters and relationship 
+            IsPlayerCanControl = true;
         }
 
-        public void TurnStared()
+        public void PlayTurn(BattleManager battle)
         {
             OnThisUnitTurnStarted?.Invoke();
+            PlayInput?.PlayTurn(battle, this);
         }
 
-        public void TurnEnded()
+        public void EndTurn()
         {
             OnThisUnitTurnEnded?.Invoke();
         }

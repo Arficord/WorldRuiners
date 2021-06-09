@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace My.UI.Windows
 {
-    public class UnitInfoWindow : MonoBehaviour
+    public class UnitInfoWindow : MonoBehaviour, IShowHide
     {
         [SerializeField] private ProgressBar healthBar;
         [SerializeField] private ProgressBar staminaBar;

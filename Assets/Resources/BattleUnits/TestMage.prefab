@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 288350092405265918, guid: 98aef0d1253018f41b82e520eb510018,
+        type: 3}
+      propertyPath: m_Name
+      value: CurrentUnitMarker
+      objectReference: {fileID: 0}
     - target: {fileID: 6982305376534447702, guid: 98aef0d1253018f41b82e520eb510018,
         type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x

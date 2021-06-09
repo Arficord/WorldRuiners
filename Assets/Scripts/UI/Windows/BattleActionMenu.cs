@@ -5,17 +5,20 @@ using My.Base.Battle;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleActionMenu : MonoBehaviour
+public class BattleActionMenu : MonoBehaviour, IShowHide
 {
     [SerializeField] private Button skipTurnButton;
     private List<Action> unsubscribeActions = new List<Action>();
-    
-    public void Initialize(BattleManager battleManager)
+    private BattleManager battleManager;
+    public void Initialize(BattleManager battle)
     {
-        skipTurnButton.onClick.AddListener(battleManager.SkipTurn);
-        unsubscribeActions.Add( () => skipTurnButton.onClick.RemoveListener(battleManager.SkipTurn) );
+        battleManager = battle;
+        battleManager.PlayerUnitInput.OnNeedInput += OnPlayerNeedsInput;
+        unsubscribeActions.Add(() => battleManager.PlayerUnitInput.OnNeedInput -= OnPlayerNeedsInput);
+        skipTurnButton.onClick.AddListener(OnSkipTurnButtonPressed);
+        unsubscribeActions.Add( () =>skipTurnButton.onClick.RemoveListener(OnSkipTurnButtonPressed) );
     }
-    
+
     public void Hide()
     {
         //TODO: Closing animation
@@ -26,6 +29,18 @@ public class BattleActionMenu : MonoBehaviour
     {
         //TODO: Opening animation
         gameObject.SetActive(true);
+    }
+    
+    private void OnPlayerNeedsInput(BattleUnit unit)
+    {
+        Show();
+    }
+
+    private void OnSkipTurnButtonPressed()
+    {
+        Debug.Log("Pressed Skip turn battle");
+        battleManager.SkipTurn();
+        Hide();
     }
     
     private void OnDestroy()

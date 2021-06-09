@@ -13,13 +13,12 @@ namespace My.Base.Battle
     {
         [SerializeField] private BattleFieldManager battleField;
         public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
-
+        public IUnitInput PlayerUnitInput;
         private BattleUnit currentTurnUnit = null;
         private bool isWaitingForUnitPlay = false;
-        
         private const float BATTLE_ACTION_TIME_CUP = 1000;
         private const float BATTLE_TICK_TIME = 0.1f;
-
+        
         //TODO:REMOVE. Test tempo method
         private void Awake()
         {
@@ -31,11 +30,18 @@ namespace My.Base.Battle
             SpawnUnit(UnitTypes.TestWarrior, 30, Team.Second);
             SpawnUnit(UnitTypes.TestTank, 59, Team.Second);
 
+            PlayerUnitInput = new BattleUnitController();
+            foreach (var unit in UnitsInBattle)
+            {
+                unit.PlayInput = PlayerUnitInput;
+            }
+
             StartBattle();
         }
 
         public void SkipTurn()
         {
+            Debug.Log("Skip Turn");
             EndTurn();    
         }
         
@@ -88,10 +94,10 @@ namespace My.Base.Battle
 
         private void StartTurn(BattleUnit unit)
         {
-            Debug.Log($"Currently moves {unit.UnitTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
+            Debug.Log($"Currently moves {unit.RealTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
             currentTurnUnit = unit;
             isWaitingForUnitPlay = true;
-            currentTurnUnit.TurnStared();
+            currentTurnUnit.PlayTurn(this);
         }
         
         private void EndTurn()
@@ -102,7 +108,7 @@ namespace My.Base.Battle
                 return;
             }
             currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP; 
-            currentTurnUnit.TurnEnded();
+            currentTurnUnit.EndTurn();
             currentTurnUnit = null;
             isWaitingForUnitPlay = false;
         }
@@ -121,6 +127,7 @@ namespace My.Base.Battle
             {
                 Debug.Log($"Dont got place to spawn unit {unit.Name} in team {team}");
             }
+
             BattleUnit battleUnit = Instantiate(loadedResource, placeToSpawn);
             battleUnit.Initialize(unit, team);
             UnitsInBattle.Add(battleUnit);

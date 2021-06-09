@@ -89,4 +89,9 @@ namespace My.UI
         }
         
     }
+
+    public interface IBattleUI
+    {
+        void BeginWaitUserInput();
+    }
 }
