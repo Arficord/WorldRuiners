@@ -2,21 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using My.Base.Battle;
+using My.Base.Units;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BattleActionMenu : MonoBehaviour, IShowHide
 {
     [SerializeField] private Button skipTurnButton;
-    private List<Action> unsubscribeActions = new List<Action>();
+    [SerializeField] private Button attackButton;
+    [SerializeField] private Button skillButton;
+    public event Action<Skill> OnNeedToSelectTarget;
     private BattleManager battleManager;
+    
+        
     public void Initialize(BattleManager battle)
     {
         battleManager = battle;
         battleManager.PlayerUnitInput.OnNeedInput += OnPlayerNeedsInput;
-        unsubscribeActions.Add(() => battleManager.PlayerUnitInput.OnNeedInput -= OnPlayerNeedsInput);
         skipTurnButton.onClick.AddListener(OnSkipTurnButtonPressed);
-        unsubscribeActions.Add( () =>skipTurnButton.onClick.RemoveListener(OnSkipTurnButtonPressed) );
+        attackButton.onClick.AddListener(OnAttackButtonPressed);
+        skillButton.onClick.AddListener(OnSkillButtonPressed);
     }
 
     public void Hide()
@@ -43,12 +48,25 @@ public class BattleActionMenu : MonoBehaviour, IShowHide
         Hide();
     }
     
+    private void OnAttackButtonPressed()
+    {
+        Debug.Log("Pressed Attack");
+        Hide();
+        
+        Skill simpleAttack = new PhysicalAttackSkill();
+        OnNeedToSelectTarget?.Invoke(simpleAttack);
+    }
+    
+    private void OnSkillButtonPressed()
+    {
+        Debug.Log("Pressed Skill");
+    }
+    
     private void OnDestroy()
     {
-        foreach (Action unsubscribe in unsubscribeActions)
-        {
-            unsubscribe();
-        }
-        unsubscribeActions.Clear();
+        battleManager.PlayerUnitInput.OnNeedInput -= OnPlayerNeedsInput;
+        skipTurnButton.onClick.RemoveListener(OnSkipTurnButtonPressed);
+        attackButton.onClick.RemoveListener(OnAttackButtonPressed);
+        skillButton.onClick.RemoveListener(OnSkillButtonPressed);
     }
 }

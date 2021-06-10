@@ -21,16 +21,17 @@ namespace My.Base.Units
             Level = level;
         }
         
-        public void GetDamage(float damage)
+        public void ReceiveDamage(Damage damage)
         {
-            CurrentAttributes.Health -= damage;
+            Debug.Log($"{Name} received {damage.Value} {damage.Type} damage!");
+            CurrentAttributes.Health -= damage.Value;
             if (CurrentAttributes.Health <= 0)
             {
                 Die();
             }
         }
 
-        public void Heal(float healAmount)
+        public void ReceiveHealing(float healAmount)
         {
             if (healAmount + CurrentAttributes.Health > BaseAttributes.Health)
             {
@@ -39,6 +40,13 @@ namespace My.Base.Units
 
             CurrentAttributes.Health += healAmount;
         }
+
+        public void Attack(Unit target)
+        {
+            Damage damage = new Damage(CurrentAttributes.PhysicalPower, DamageType.Strike);
+            target.ReceiveDamage(damage);
+        }
+        
 
         public void Die()
         {

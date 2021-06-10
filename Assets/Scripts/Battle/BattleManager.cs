@@ -12,9 +12,9 @@ namespace My.Base.Battle
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BattleFieldManager battleField;
-        public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
         public IUnitInput PlayerUnitInput;
-        private BattleUnit currentTurnUnit = null;
+        public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
+        public BattleUnit CurrentTurnUnit { get; private set; } = null;
         private bool isWaitingForUnitPlay = false;
         private const float BATTLE_ACTION_TIME_CUP = 1000;
         private const float BATTLE_TICK_TIME = 0.1f;
@@ -95,21 +95,21 @@ namespace My.Base.Battle
         private void StartTurn(BattleUnit unit)
         {
             Debug.Log($"Currently moves {unit.RealTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
-            currentTurnUnit = unit;
+            CurrentTurnUnit = unit;
             isWaitingForUnitPlay = true;
-            currentTurnUnit.PlayTurn(this);
+            CurrentTurnUnit.PlayTurn(this);
         }
         
         private void EndTurn()
         {
-            if (currentTurnUnit == null)
+            if (CurrentTurnUnit == null)
             {
                 Debug.LogError("Trying to end the turn. But current unit is missing!");
                 return;
             }
-            currentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP; 
-            currentTurnUnit.EndTurn();
-            currentTurnUnit = null;
+            CurrentTurnUnit.BattleActionTime -= BATTLE_ACTION_TIME_CUP; 
+            CurrentTurnUnit.EndTurn();
+            CurrentTurnUnit = null;
             isWaitingForUnitPlay = false;
         }
         

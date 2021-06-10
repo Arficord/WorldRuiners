@@ -9,11 +9,20 @@ namespace My.UI
 {
     public class BattleUI : MonoBehaviour
     {
+        private enum UIState
+        {
+            Normal,
+            UsingSkill,
+            UsingItem,
+        }
         [SerializeField] private BattleManager battleManager;
         [SerializeField] private Camera raycastCamera;
         [SerializeField] private UnitInfoWindow unitInfoWindow;
         [SerializeField] private BattleActionMenu battleActionMenu;
         [SerializeField] private TimeFlowPlank timeFlowPlank;
+        [SerializeField] private SkillCastingUI skillCastingUI;
+        
+        public event Action<BattleUnit> OnClickOnUnit;
         private RectTransform unitInfoWindowTransform;
         private BattleUnit LookTarget
         {
@@ -32,6 +41,7 @@ namespace My.UI
             }
         }
         private BattleUnit lookTarget;
+        private UIState state;
         
         private void Start()
         {
@@ -41,28 +51,45 @@ namespace My.UI
 
         private void Update()
         {
-            MouseRaycast();
+            MouseRaycastCheck();
+            MouseButtonCheck();
         }
 
-        public void ShowActionMenu(bool show)
+        public void ShowEnemyUnitTarget(Skill ability)
         {
-            if (show)
+            state = UIState.UsingSkill;
+            BattleUnit currentUnit = battleManager.CurrentTurnUnit;
+            foreach (var unit in battleManager.UnitsInBattle)
             {
-                battleActionMenu.Show();
+                if (unit == currentUnit)
+                {
+                    continue;
+                }
+                if (unit.RealTeam != currentUnit.MindedTeam)
+                {
+                    unit.ShowTargetMark(true);
+                }
             }
-            else
-            {
-                battleActionMenu.Hide();
-            }
+
+            skillCastingUI.Initialize(currentUnit.UnitModel, ability);
         }
 
         private void Initialize()
         {
+            state = UIState.Normal;
             timeFlowPlank.Initialize(battleManager.UnitsInBattle);
             battleActionMenu.Initialize(battleManager);
+            battleActionMenu.OnNeedToSelectTarget += ShowEnemyUnitTarget;
+            skillCastingUI.OnSkillCasted += FinishUseSkillCastingUI;
         }
-        
-        private void MouseRaycast()
+
+        private void FinishUseSkillCastingUI()
+        {
+            state = UIState.Normal;
+            battleManager.SkipTurn();
+        }
+
+        private void MouseRaycastCheck()
         {
             //if performance problems: do not update unitInfoWindow view every frame. Do events
             //Use something like Physics2D.GetRayIntersectionNonAlloc (will be deprecated in a future build)
@@ -87,11 +114,29 @@ namespace My.UI
                 LookTarget = null;
             }
         }
-        
-    }
 
-    public interface IBattleUI
-    {
-        void BeginWaitUserInput();
+        private void MouseButtonCheck()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                switch (state)
+                {
+                    case UIState.UsingSkill:
+                    {
+                        if (LookTarget != null)
+                        {
+                            skillCastingUI.ToggleUnitForSkill(lookTarget.UnitModel);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            battleActionMenu.OnNeedToSelectTarget -= ShowEnemyUnitTarget;
+            skillCastingUI.OnSkillCasted -= FinishUseSkillCastingUI;
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace My.Base.Battle
     public class BattleUnit : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private GameObject targetMark;
+        
         public Unit UnitModel { get; set; }
         public Team RealTeam { get; set; }
         public Team MindedTeam { get; set; }
@@ -63,6 +65,11 @@ namespace My.Base.Battle
         public void UnselectView()
         {
             OnThisUnitUnselectedView?.Invoke();
+        }
+
+        public void ShowTargetMark(bool show)
+        {
+            targetMark.SetActive(show);
         }
         
         public void IncreaseTimePlaceByParameters()
