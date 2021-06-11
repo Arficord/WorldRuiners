@@ -75,6 +75,7 @@ namespace My.UI
         private void FinishUseSkillCastingUI()
         {
             state = UIState.Normal;
+            skillCastingUI.ClearTargetMarks(battleManager.UnitsInBattle);
             battleManager.SkipTurn();
         }
 

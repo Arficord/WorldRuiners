@@ -19,24 +19,15 @@ namespace My.Base.Battle
         private const float BATTLE_ACTION_TIME_CUP = 1000;
         private const float BATTLE_TICK_TIME = 0.1f;
         
-        //TODO:REMOVE. Test tempo method
-        private void Awake()
+        public void StartBattle(List<Unit> participants)
         {
-            SpawnUnit(UnitTypes.TestMage, 12, Team.First);
-            SpawnUnit(UnitTypes.TestWarrior, 34, Team.First);
-            SpawnUnit(UnitTypes.TestTank, 56, Team.First);
-            
-            SpawnUnit(UnitTypes.TestMage, 78, Team.Second);
-            SpawnUnit(UnitTypes.TestWarrior, 30, Team.Second);
-            SpawnUnit(UnitTypes.TestTank, 59, Team.Second);
-
             PlayerUnitInput = new BattleUnitController();
-            foreach (var unit in UnitsInBattle)
+            foreach (var unit in participants)
             {
-                unit.PlayInput = PlayerUnitInput;
+                SpawnUnit(unit);
             }
-
-            StartBattle();
+            
+            StartCoroutine(BattleCycle());
         }
 
         public void SkipTurn()
@@ -44,12 +35,7 @@ namespace My.Base.Battle
             Debug.Log("Skip Turn");
             EndTurn();    
         }
-        
-        private void StartBattle()
-        {
-            StartCoroutine(BattleCycle());
-        }
-        
+
         private IEnumerator BattleCycle()
         {
             while (true)
@@ -113,12 +99,6 @@ namespace My.Base.Battle
             isWaitingForUnitPlay = false;
         }
         
-        //Tempo unit spawn method 
-        private void SpawnUnit(UnitTypes unitType, int level, Team team)
-        {
-            SpawnUnit(UnitFactory.GetNewUnit(unitType, level, team));
-        }
-
         private void SpawnUnit(Unit unit)
         {
             BattleUnit loadedResource = Resources.Load<BattleUnit>($"BattleUnits/{unit.UnitType.ToString()}");
@@ -130,6 +110,7 @@ namespace My.Base.Battle
 
             BattleUnit battleUnit = Instantiate(loadedResource, placeToSpawn);
             battleUnit.Initialize(unit);
+            battleUnit.PlayInput = PlayerUnitInput;
             UnitsInBattle.Add(battleUnit);
         }
     }
