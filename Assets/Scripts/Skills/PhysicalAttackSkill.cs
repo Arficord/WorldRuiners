@@ -9,12 +9,11 @@ public class PhysicalAttackSkill : Skill
 
     public override bool IsPossibleTarget(Unit caster, Unit target)
     {
-        return caster!=target;
+        return caster.MindedTeam!=target.RealTeam;
     }
 
-    public override void Use(Unit caster, List<Unit> targets)
+    protected override void ApplySkillEffect(Unit caster, List<Unit> targets)
     {
-        Debug.Log(caster==targets[0]);
         Debug.Log($"Skill {nameof(PhysicalAttackSkill)}  used by {caster.Name}");
         Damage damage = new Damage(caster.CurrentAttributes.PhysicalPower, DamageType.Strike);
         targets[0].ReceiveDamage(damage);

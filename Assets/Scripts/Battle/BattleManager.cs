@@ -94,7 +94,7 @@ namespace My.Base.Battle
 
         private void StartTurn(BattleUnit unit)
         {
-            Debug.Log($"Currently moves {unit.RealTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
+            Debug.Log($"Currently moves {unit.UnitModel.RealTeam.ToString()} - {unit.name} | {unit.UnitModel.CurrentAttributes.Speed}");
             CurrentTurnUnit = unit;
             isWaitingForUnitPlay = true;
             CurrentTurnUnit.PlayTurn(this);
@@ -116,20 +116,20 @@ namespace My.Base.Battle
         //Tempo unit spawn method 
         private void SpawnUnit(UnitTypes unitType, int level, Team team)
         {
-            SpawnUnit(UnitFactory.GetNewUnit(unitType, level), team);
+            SpawnUnit(UnitFactory.GetNewUnit(unitType, level, team));
         }
 
-        private void SpawnUnit(Unit unit, Team team)
+        private void SpawnUnit(Unit unit)
         {
             BattleUnit loadedResource = Resources.Load<BattleUnit>($"BattleUnits/{unit.UnitType.ToString()}");
-            Transform placeToSpawn = battleField.GetEmptyPlace(team);
+            Transform placeToSpawn = battleField.GetEmptyPlace(unit.RealTeam);
             if (placeToSpawn == null)
             {
-                Debug.Log($"Dont got place to spawn unit {unit.Name} in team {team}");
+                Debug.Log($"Dont got place to spawn unit {unit.Name} in team {unit.RealTeam}");
             }
 
             BattleUnit battleUnit = Instantiate(loadedResource, placeToSpawn);
-            battleUnit.Initialize(unit, team);
+            battleUnit.Initialize(unit);
             UnitsInBattle.Add(battleUnit);
         }
     }

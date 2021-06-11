@@ -9,16 +9,20 @@ namespace My.Base.Units
         public string Name { get; }
         public int Level { get; }
         public UnitTypes UnitType { get; }
+        public Team RealTeam { get; set; }
+        public Team MindedTeam { get; set; }
         public UnitAttributes BaseAttributes { get; }
         public UnitAttributes CurrentAttributes { get; }
 
-        public Unit(UnitAttributes attributes, string unitName, UnitTypes unitType, int level)
+        public Unit(string unitName, int level, UnitAttributes attributes,  UnitTypes unitType, Team team)
         {
+            Name = unitName;
+            Level = level;
             BaseAttributes = attributes;
             CurrentAttributes = new UnitAttributes(BaseAttributes);
-            Name = unitName;
             UnitType = unitType;
-            Level = level;
+            RealTeam = team;
+            MindedTeam = team;
         }
         
         public void ReceiveDamage(Damage damage)

@@ -19,6 +19,22 @@ public class SkillCastingUI : MonoBehaviour
         skillToUse = skill;
     }
 
+    public void MarkValidTargets(List<BattleUnit> units)
+    {
+        foreach (var unit in units)
+        {
+            unit.ShowTargetMark(skillToUse.IsPossibleTarget(skillCaster, unit.UnitModel));
+        }
+    }
+
+    public void ClearTargetMarks(List<BattleUnit> units)
+    {
+        foreach (var unit in units)
+        {
+            unit.ShowTargetMark(false);
+        }
+    }
+    
     public bool IsUnitSelectedForSkill(Unit unit)
     {
         return selectedForSkillUnits.Contains(unit);
@@ -26,7 +42,12 @@ public class SkillCastingUI : MonoBehaviour
 
     public void ToggleUnitForSkill(Unit unit)
     {
-        Debug.Log($"TTT {skillCaster==unit}");
+        if (!skillToUse.IsPossibleTarget(skillCaster, unit))
+        {
+            Debug.Log("Tried to select invalid target for skill");
+            return;
+        }
+        
         if (selectedForSkillUnits.Contains(unit))
         {
             selectedForSkillUnits.Remove(unit);

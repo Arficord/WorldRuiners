@@ -10,7 +10,7 @@ public class BattleUnitController: IUnitInput
     public event Action<BattleUnit> OnNeedInput;
     public void PlayTurn(BattleManager battle, BattleUnit unit)
     {
-        if (unit.MindedTeam == Team.First && unit.IsPlayerCanControl)
+        if (unit.UnitModel.MindedTeam == Team.First && unit.IsPlayerCanControl)
         {
             NeedInput(battle, unit);
         }

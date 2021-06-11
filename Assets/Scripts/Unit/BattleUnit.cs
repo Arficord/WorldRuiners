@@ -13,9 +13,7 @@ namespace My.Base.Battle
         [SerializeField] private GameObject targetMark;
         
         public Unit UnitModel { get; set; }
-        public Team RealTeam { get; set; }
-        public Team MindedTeam { get; set; }
-        
+
         public bool IsPlayerCanControl { get; set; }
         public IUnitInput PlayInput { get; set; }
         
@@ -37,11 +35,9 @@ namespace My.Base.Battle
         
         private float battleActionTime;
 
-        public void Initialize(Unit unitModel, Team unitTeam)
+        public void Initialize(Unit unitModel)
         {
             UnitModel = unitModel;
-            RealTeam = unitTeam;
-            MindedTeam = RealTeam;
             //TODO: Must be calculated from parameters and relationship 
             IsPlayerCanControl = true;
         }

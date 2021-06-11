@@ -9,23 +9,23 @@ namespace My.Base.Units
     public static class UnitFactory
     {
 
-        public static Unit GetNewUnit(UnitTypes presetName, int level)
+        public static Unit GetNewUnit(UnitTypes presetName, int level, Team team)
         {
             switch (presetName)
             {
                 case UnitTypes.TestWarrior:
-                    return GetNewTestWarrior(level);
+                    return GetNewTestWarrior(level, team);
                 case UnitTypes.TestMage:
-                    return GetNewTestMage(level);
+                    return GetNewTestMage(level, team);
                 case UnitTypes.TestTank:
-                    return GetNewTestTank(level);
+                    return GetNewTestTank(level, team);
                 default:
                     throw new InvalidEnumArgumentException(presetName.ToString());
             }
         }
 
         #region Units Creation Methods
-        public static Unit GetNewTestWarrior(int level)
+        public static Unit GetNewTestWarrior(int level, Team team)
         {
             UnitAttributes attributes = new UnitAttributes()
             {
@@ -40,11 +40,12 @@ namespace My.Base.Units
                 Accuracy = 25 + level,
                 CriticalHitChance = 0.1f
             };
-            //TODO: add translation support
-            return new Unit(attributes, "Bandit Swordsman", UnitTypes.TestWarrior, level);
+            string name = "Bandit Swordsman";
+            UnitTypes type = UnitTypes.TestWarrior;
+            return new Unit(name, level, attributes, type, team);
         }
         
-        public static Unit GetNewTestMage(int level)
+        public static Unit GetNewTestMage(int level, Team team)
         {
             UnitAttributes attributes = new UnitAttributes()
             {
@@ -63,11 +64,12 @@ namespace My.Base.Units
                 CriticalHitChance = 0.15f,
                 CriticalHitMultiplier = 2,
             };
-            //TODO: add translation support
-            return new Unit(attributes, "Bandit Mage", UnitTypes.TestMage, level);
+            string name = "Bandit Mage";
+            UnitTypes type = UnitTypes.TestMage;
+            return new Unit(name, level, attributes, type, team);
         }
         
-        public static Unit GetNewTestTank(int level)
+        public static Unit GetNewTestTank(int level, Team team)
         {
             UnitAttributes attributes = new UnitAttributes()
             {
@@ -84,8 +86,9 @@ namespace My.Base.Units
                 CriticalHitChance = 0.15f,
                 CriticalHitMultiplier = 2,
             };
-            //TODO: add translation support
-            return new Unit(attributes, "Bandit Bastion", UnitTypes.TestTank, level);
+            string name = "Bandit Bastion";
+            UnitTypes type = UnitTypes.TestTank;
+            return new Unit(name, level, attributes, type, team);
         }
         #endregion
     }

@@ -59,19 +59,8 @@ namespace My.UI
         {
             state = UIState.UsingSkill;
             BattleUnit currentUnit = battleManager.CurrentTurnUnit;
-            foreach (var unit in battleManager.UnitsInBattle)
-            {
-                if (unit == currentUnit)
-                {
-                    continue;
-                }
-                if (unit.RealTeam != currentUnit.MindedTeam)
-                {
-                    unit.ShowTargetMark(true);
-                }
-            }
-
             skillCastingUI.Initialize(currentUnit.UnitModel, ability);
+            skillCastingUI.MarkValidTargets(battleManager.UnitsInBattle);
         }
 
         private void Initialize()
