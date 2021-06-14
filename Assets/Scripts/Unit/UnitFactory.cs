@@ -42,7 +42,9 @@ namespace My.Base.Units
             };
             string name = "Bandit Swordsman";
             UnitTypes type = UnitTypes.TestWarrior;
-            return new Unit(name, level, attributes, type, team);
+            Unit unit = new Unit(name, level, attributes, type, team);
+            unit.Skills.Add(new PhysicalAttackSkill());
+            return unit;
         }
         
         public static Unit GetNewTestMage(int level, Team team)
@@ -66,7 +68,10 @@ namespace My.Base.Units
             };
             string name = "Bandit Mage";
             UnitTypes type = UnitTypes.TestMage;
-            return new Unit(name, level, attributes, type, team);
+            Unit unit = new Unit(name, level, attributes, type, team);
+            unit.Skills.Add(new PhysicalAttackSkill());
+            unit.Skills.Add(new MagicAttackSkill());
+            return unit;
         }
         
         public static Unit GetNewTestTank(int level, Team team)
@@ -88,7 +93,9 @@ namespace My.Base.Units
             };
             string name = "Bandit Bastion";
             UnitTypes type = UnitTypes.TestTank;
-            return new Unit(name, level, attributes, type, team);
+            Unit unit = new Unit(name, level, attributes, type, team);
+            unit.Skills.Add(new PhysicalAttackSkill());
+            return unit;
         }
         #endregion
     }

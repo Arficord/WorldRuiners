@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class BattleActionMenu : MonoBehaviour, IShowHide
 {
     [SerializeField] private Button skipTurnButton;
-    [SerializeField] private Button attackButton;
-    [SerializeField] private Button skillButton;
+    [SerializeField] private SkillSelectItem skillSelectItemPrefab;
+    [SerializeField] private Transform skillContainer;
     public event Action<Skill> OnNeedToSelectTarget;
     private BattleManager battleManager;
     
@@ -20,8 +20,6 @@ public class BattleActionMenu : MonoBehaviour, IShowHide
         battleManager = battle;
         battleManager.PlayerUnitInput.OnNeedInput += OnPlayerNeedsInput;
         skipTurnButton.onClick.AddListener(OnSkipTurnButtonPressed);
-        attackButton.onClick.AddListener(OnAttackButtonPressed);
-        skillButton.onClick.AddListener(OnSkillButtonPressed);
     }
 
     public void Hide()
@@ -38,6 +36,16 @@ public class BattleActionMenu : MonoBehaviour, IShowHide
     
     private void OnPlayerNeedsInput(BattleUnit unit)
     {
+        //TODO: replace with recycling scroll
+        foreach (Transform child in skillContainer.transform) {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var skill in unit.UnitModel.Skills)
+        {
+            SkillSelectItem skillItem = Instantiate(skillSelectItemPrefab, skillContainer);
+            skillItem.Initialize(skill, OnSkillItemPressed);
+        }
         Show();
     }
 
@@ -48,25 +56,16 @@ public class BattleActionMenu : MonoBehaviour, IShowHide
         Hide();
     }
     
-    private void OnAttackButtonPressed()
+    private void OnSkillItemPressed(Skill skill)
     {
-        Debug.Log("Pressed Attack");
+        Debug.Log("Pressed skill item");
         Hide();
-        
-        Skill simpleAttack = new PhysicalAttackSkill();
-        OnNeedToSelectTarget?.Invoke(simpleAttack);
+        OnNeedToSelectTarget?.Invoke(skill);
     }
-    
-    private void OnSkillButtonPressed()
-    {
-        Debug.Log("Pressed Skill");
-    }
-    
+
     private void OnDestroy()
     {
         battleManager.PlayerUnitInput.OnNeedInput -= OnPlayerNeedsInput;
         skipTurnButton.onClick.RemoveListener(OnSkipTurnButtonPressed);
-        attackButton.onClick.RemoveListener(OnAttackButtonPressed);
-        skillButton.onClick.RemoveListener(OnSkillButtonPressed);
     }
 }

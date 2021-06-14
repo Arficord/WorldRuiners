@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using My.Base.Units;
 using UnityEngine;
 
-public class PhysicalAttackSkill : Skill
+public class MagicAttackSkill : Skill
 {
-    //public override int ManualTargetAmount { get; protected set; } = 1;
+    public new int ManualTargetAmount { get; protected set; } = 3;
 
     public override bool IsPossibleTarget(Unit caster, Unit target)
     {
@@ -15,19 +15,19 @@ public class PhysicalAttackSkill : Skill
     public override string GetNameKey()
     {
         //TODO: replace with translation key
-        return "PUNCH_SKILL_NAME";
+        return "MAGIC_SKILL_NAME";
     }
 
     public override string GetDescriptionKey()
     {
         //TODO: replace with translation key
-        return "PUNCH_SKILL_DESCRIPTION";
+        return "MAGIC_SKILL_DESCRIPTION";
     }
     
     protected override void ApplySkillEffect(Unit caster, List<Unit> targets)
     {
-        Debug.Log($"Skill {nameof(PhysicalAttackSkill)}  used by {caster.Name}");
-        Damage damage = new Damage(caster.CurrentAttributes.PhysicalPower, DamageType.Strike);
-        targets[0].ReceiveDamage(damage);
+        Debug.Log($"Skill {nameof(MagicAttackSkill)}  used by {caster.Name}");
+        float healing = caster.CurrentAttributes.MagicalPower;
+        targets[0].ReceiveHealing(healing);
     }
 }

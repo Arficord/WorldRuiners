@@ -20,6 +20,10 @@ public abstract class Skill
             ApplySkillEffect(caster, targets);
         }
     }
+    
+    public abstract String GetNameKey();
+    
+    public abstract String GetDescriptionKey();
 
     protected abstract void ApplySkillEffect(Unit caster, List<Unit> targets);
 }

@@ -13,6 +13,8 @@ namespace My.Base.Units
         public Team MindedTeam { get; set; }
         public UnitAttributes BaseAttributes { get; }
         public UnitAttributes CurrentAttributes { get; }
+        
+        public List<Skill> Skills { get; } = new List<Skill>();
 
         public Unit(string unitName, int level, UnitAttributes attributes,  UnitTypes unitType, Team team)
         {
@@ -37,6 +39,7 @@ namespace My.Base.Units
 
         public void ReceiveHealing(float healAmount)
         {
+            Debug.Log($"{Name} received {healAmount} health!");
             if (healAmount + CurrentAttributes.Health > BaseAttributes.Health)
             {
                 CurrentAttributes.Health = BaseAttributes.Health;
@@ -44,13 +47,6 @@ namespace My.Base.Units
 
             CurrentAttributes.Health += healAmount;
         }
-
-        public void Attack(Unit target)
-        {
-            Damage damage = new Damage(CurrentAttributes.PhysicalPower, DamageType.Strike);
-            target.ReceiveDamage(damage);
-        }
-        
 
         public void Die()
         {
