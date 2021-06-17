@@ -31,7 +31,11 @@ public class BattleUnitController: IUnitInput
         while (targets.Count < baseAttack.ManualTargetAmount)
         {
             int index = Random.Range(0, battle.UnitsInBattle.Count);
-            targets.Add(battle.UnitsInBattle[index].UnitModel);
+            Unit target = battle.UnitsInBattle[index].UnitModel;
+            if (baseAttack.IsPossibleTarget(unit.UnitModel, target))
+            {
+                targets.Add(target);   
+            }
         }
         baseAttack.Use(unit.UnitModel, targets);
         battle.SkipTurn();
