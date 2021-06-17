@@ -10,15 +10,16 @@ public class UnitHudManager : MonoBehaviour
 
     public void Initialize(List<BattleUnit> units)
     {
+        Camera camera = Camera.main;
         foreach (var unit in units)
         {
-            SpawnHud(unit);
+            SpawnHud(unit, camera);
         }
     }
 
-    private void SpawnHud(BattleUnit unit)
+    private void SpawnHud(BattleUnit unit, Camera camera)
     {
-        Vector3 hudPosition = Camera.main.WorldToScreenPoint(unit.transform.position);
+        Vector3 hudPosition = camera.WorldToScreenPoint(unit.GetBottomMarkPosition());
         UnitHud hud = Instantiate(hudPrefab, hudPosition, Quaternion.identity, transform);
         hud.Initialize(unit);
     }

@@ -11,6 +11,7 @@ namespace My.Base.Battle
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private GameObject targetMark;
+        [SerializeField] private Transform bottomPoint;
         
         public Unit UnitModel { get; set; }
 
@@ -66,6 +67,11 @@ namespace My.Base.Battle
         public void ShowTargetMark(bool show)
         {
             targetMark.SetActive(show);
+        }
+
+        public Vector3 GetBottomMarkPosition()
+        {
+            return bottomPoint.position;
         }
         
         public void IncreaseTimePlaceByParameters()
