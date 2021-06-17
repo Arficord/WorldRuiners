@@ -30,6 +30,8 @@ namespace My.Base.Units
             UnitAttributes attributes = new UnitAttributes()
             {
                 Health = 10 + level*2,
+                Mana = 5 + level/2,
+                ManaRegeneration = 0+level/3,
                 Stamina = 20 + level/2,
                 StaminaRegeneration = 2 + level/4,
                 PhysicalDefence = 5 + level/3,
@@ -80,6 +82,8 @@ namespace My.Base.Units
             {
                 Health = 15 + level*2,
                 HealthRegeneration = 0.1f*(1+level/10),
+                Mana = 5 + level/2,
+                ManaRegeneration = 0+level/3,
                 Stamina = 24 + level/4,
                 StaminaRegeneration = 2 + level/8,
                 PhysicalDefence = 8 + level/2,

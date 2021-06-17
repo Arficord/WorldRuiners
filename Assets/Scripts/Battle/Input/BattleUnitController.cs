@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using My.Base.Battle;
+using My.Base.Units;
 using My.UI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BattleUnitController: IUnitInput
 {
@@ -22,7 +24,16 @@ public class BattleUnitController: IUnitInput
 
     private void AutoPlay(BattleManager battle, BattleUnit unit)
     {
+        //Tempo realization
         Debug.Log("Auto Play");
+        Skill baseAttack = unit.UnitModel.Skills[0];
+        List<Unit> targets = new List<Unit>();
+        while (targets.Count < baseAttack.ManualTargetAmount)
+        {
+            int index = Random.Range(0, battle.UnitsInBattle.Count);
+            targets.Add(battle.UnitsInBattle[index].UnitModel);
+        }
+        baseAttack.Use(unit.UnitModel, targets);
         battle.SkipTurn();
     }
 

@@ -10,7 +10,29 @@ namespace My.UI.Utils
         [SerializeField] private TextMeshProUGUI valueTextField;
         [SerializeField] private Image progressImage;
 
-        public void UpdateView(float currentValue, float maxValue)
+        public float MaxValue
+        {
+            get => maxValue;
+            set
+            {
+                maxValue = value;
+                UpdateView();
+            }
+        }
+
+        public float CurrentValue
+        {
+            get => currentValue;
+            set
+            {
+                currentValue = value;
+                UpdateView();
+            }
+        }
+        private float maxValue;
+        private float currentValue;
+
+        private void UpdateView()
         {
             if (valueTextField != null)
             {

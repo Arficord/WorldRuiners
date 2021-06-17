@@ -21,6 +21,7 @@ namespace My.UI
         [SerializeField] private BattleActionMenu battleActionMenu;
         [SerializeField] private TimeFlowPlank timeFlowPlank;
         [SerializeField] private SkillCastingUI skillCastingUI;
+        [SerializeField] private UnitHudManager unitHud;
         
         public event Action<BattleUnit> OnClickOnUnit;
         private RectTransform unitInfoWindowTransform;
@@ -70,6 +71,7 @@ namespace My.UI
             battleActionMenu.Initialize(battleManager);
             battleActionMenu.OnNeedToSelectTarget += ShowEnemyUnitTarget;
             skillCastingUI.OnSkillCasted += FinishUseSkillCastingUI;
+            unitHud.Initialize(battleManager.UnitsInBattle);
         }
 
         private void FinishUseSkillCastingUI()

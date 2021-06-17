@@ -30,9 +30,12 @@ namespace My.UI.Windows
             UnitAttributes curAttributes = unitToShow.CurrentAttributes;
             UnitAttributes baseAttributes = unitToShow.BaseAttributes;
             
-            healthBar.UpdateView(curAttributes.Health, baseAttributes.Health);
-            staminaBar.UpdateView(curAttributes.Stamina, baseAttributes.Stamina);
-            manaBar.UpdateView(curAttributes.Mana, baseAttributes.Mana);
+            healthBar.MaxValue = unitToShow.BaseAttributes.Health;
+            healthBar.CurrentValue = unitToShow.CurrentAttributes.Health;
+            manaBar.MaxValue = unitToShow.BaseAttributes.Mana;
+            manaBar.CurrentValue = unitToShow.CurrentAttributes.Mana;
+            staminaBar.MaxValue = unitToShow.BaseAttributes.Stamina;
+            staminaBar.CurrentValue = unitToShow.CurrentAttributes.Stamina;
 
             unitNameTextField.text = unitToShow.Name;
             healthRegenerationTextField.text = curAttributes.HealthRegeneration.ToString("+0.0");
