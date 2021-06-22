@@ -29,7 +29,7 @@ namespace My.Base.Battle
 
         private void AutoPlay(BattleManager battle, BattleUnit unit)
         {
-            //Tempo realization
+            //TODO: improve autoPlay. Tempo realization
             Debug.Log("Auto Play");
             Skill baseAttack = unit.UnitModel.Skills[0];
             List<Unit> targets = new List<Unit>();

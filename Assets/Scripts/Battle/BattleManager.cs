@@ -10,6 +10,7 @@ namespace My.Base.Battle
 {
     public class BattleManager : MonoBehaviour
     {
+        [SerializeField] private BattleUI battleUI;
         [SerializeField] private BattleFieldManager battleField;
         public IUnitInput PlayerUnitInput;
         public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
@@ -27,6 +28,7 @@ namespace My.Base.Battle
             }
             
             StartCoroutine(BattleCycle());
+            battleUI.Initialize(this);
         }
 
         public void SkipTurn()

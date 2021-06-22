@@ -17,13 +17,13 @@ namespace My.UI
             UsingSkill,
             UsingItem,
         }
-        [SerializeField] private BattleManager battleManager;
         [SerializeField] private Camera raycastCamera;
         [SerializeField] private UnitInfoWindow unitInfoWindow;
         [SerializeField] private BattleActionMenu battleActionMenu;
         [SerializeField] private TimeFlowPlank timeFlowPlank;
         [SerializeField] private SkillCastingUI skillCastingUI;
         [SerializeField] private UnitHudManager unitHud;
+        private BattleManager battleManager;
         
         public event Action<BattleUnit> OnClickOnUnit;
         private RectTransform unitInfoWindowTransform;
@@ -46,10 +46,9 @@ namespace My.UI
         private BattleUnit lookTarget;
         private UIState state;
         
-        private void Start()
+        private void Awake()
         {
             unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
-            Initialize();
         }
 
         private void Update()
@@ -58,22 +57,24 @@ namespace My.UI
             MouseButtonCheck();
         }
 
-        public void ShowEnemyUnitTarget(Skill ability)
+        public void Initialize(BattleManager battle)
         {
-            state = UIState.UsingSkill;
-            BattleUnit currentUnit = battleManager.CurrentTurnUnit;
-            skillCastingUI.Initialize(currentUnit.UnitModel, ability);
-            skillCastingUI.MarkValidTargets(battleManager.UnitsInBattle);
-        }
-
-        private void Initialize()
-        {
+            gameObject.SetActive(true);
+            battleManager = battle;
             state = UIState.Normal;
             timeFlowPlank.Initialize(battleManager.UnitsInBattle);
             battleActionMenu.Initialize(battleManager);
             battleActionMenu.OnNeedToSelectTarget += ShowEnemyUnitTarget;
             skillCastingUI.OnSkillCasted += FinishUseSkillCastingUI;
             unitHud.Initialize(battleManager.UnitsInBattle);
+        }
+
+        private void ShowEnemyUnitTarget(Skill ability)
+        {
+            state = UIState.UsingSkill;
+            BattleUnit currentUnit = battleManager.CurrentTurnUnit;
+            skillCastingUI.Initialize(currentUnit.UnitModel, ability);
+            skillCastingUI.MarkValidTargets(battleManager.UnitsInBattle);
         }
 
         private void FinishUseSkillCastingUI()
