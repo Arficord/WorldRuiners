@@ -31,9 +31,10 @@ namespace My.Base.Battle
             battleUnit.OnBattleActionTimeChanged += UpdatePosition;
             battleUnit.OnThisUnitSelectedView += MarkAsSelected;
             battleUnit.OnThisUnitUnselectedView += MarkAsUnselected;
+            battleUnit.UnitModel.OnDie += PlayDestroyAnimation;
         }
-        
-        public void UpdatePosition()
+
+        private void UpdatePosition()
         {
             float timePosition = battleUnit.BattleActionTime;
             float newXPosition = maxPosition < timePosition ? maxPosition : timePosition;
@@ -54,13 +55,19 @@ namespace My.Base.Battle
         
         private void OnDestroy()
         {
-            //if instantiated
-            if (battleUnit!=null)
+            //if not instantiated
+            if (battleUnit == null)
             {
-                battleUnit.OnBattleActionTimeChanged -= UpdatePosition;
-                battleUnit.OnThisUnitSelectedView -= MarkAsSelected;
-                battleUnit.OnThisUnitUnselectedView -= MarkAsUnselected;
+                return;
             }
+            battleUnit.OnBattleActionTimeChanged -= UpdatePosition;
+            battleUnit.OnThisUnitSelectedView -= MarkAsSelected;
+            battleUnit.OnThisUnitUnselectedView -= MarkAsUnselected;
+        }
+        
+        private void PlayDestroyAnimation()
+        {
+            Destroy(gameObject);
         }
     }
 }

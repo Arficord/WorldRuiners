@@ -105,13 +105,21 @@ namespace My.Base.Battle
             Transform placeToSpawn = battleField.GetEmptyPlace(unit.RealTeam);
             if (placeToSpawn == null)
             {
-                Debug.Log($"Dont got place to spawn unit {unit.Name} in team {unit.RealTeam}");
+                Debug.LogError($"Did not get place to spawn unit {unit.Name} in team {unit.RealTeam}");
+                return;
             }
 
             BattleUnit battleUnit = Instantiate(loadedResource, placeToSpawn);
             battleUnit.Initialize(unit);
             battleUnit.PlayInput = PlayerUnitInput;
             UnitsInBattle.Add(battleUnit);
+            battleUnit.UnitModel.OnDie += () => DestroyUnit(battleUnit);
+        }
+
+        private void DestroyUnit(BattleUnit battleUnit)
+        {
+            UnitsInBattle.Remove(battleUnit);
+            battleUnit.PlayDieAnimation();
         }
     }
 }

@@ -19,6 +19,7 @@ public class UnitHud : MonoBehaviour
         UpdateHP();
         UpdateMP();
         UpdateSP();
+        unitModel.OnDie += PlayDestroyAnimation;
     }
     
     private void UpdateHP()
@@ -39,6 +40,7 @@ public class UnitHud : MonoBehaviour
         staminaBar.CurrentValue = unitModel.CurrentAttributes.Stamina;
     }
 
+    //TODO: Make events
     private void Update()
     {
         if (unitModel == null)
@@ -48,5 +50,10 @@ public class UnitHud : MonoBehaviour
         UpdateHP();
         UpdateMP();
         UpdateSP();
+    }
+
+    private void PlayDestroyAnimation()
+    {
+        Destroy(gameObject);
     }
 }

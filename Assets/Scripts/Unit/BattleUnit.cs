@@ -78,5 +78,10 @@ namespace My.Base.Battle
         {
             BattleActionTime += UnitModel.CurrentAttributes.Speed;
         }
+        
+        public void PlayDieAnimation()
+        {
+            Destroy(gameObject);
+        }
     }
 }

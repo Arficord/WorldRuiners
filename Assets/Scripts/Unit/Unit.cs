@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace My.Base.Units
         public Team MindedTeam { get; set; }
         public UnitAttributes BaseAttributes { get; }
         public UnitAttributes CurrentAttributes { get; }
+        public event Action OnDie;
         
         public List<Skill> Skills { get; } = new List<Skill>();
 
@@ -50,6 +52,7 @@ namespace My.Base.Units
 
         public void Die()
         {
+            OnDie?.Invoke();
             Debug.Log($"Killed {Name}");
         }
     }
