@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace My.Base.Battle
 {
-    //TODO: Needs to be Refactored
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BattleFieldManager battleField;

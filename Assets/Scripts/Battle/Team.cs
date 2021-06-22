@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Team
+namespace My.Base.Units
 {
-    First,
-    Second,
+    public enum Team
+    {
+        First,
+        Second,
+    }
 }

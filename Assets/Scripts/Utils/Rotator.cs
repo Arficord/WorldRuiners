@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotator : MonoBehaviour
+namespace My.Utils
 {
-    [SerializeField] private float xSpeed = 0;
-    [SerializeField] private float ySpeed = 0;
-    [SerializeField] private float zSpeed = 0;
-    private Transform transformCashed;
-    
-    void Awake()
+    public class Rotator : MonoBehaviour
     {
-        transformCashed = transform;
-    }
-    
-    void Update()
-    {
-        transformCashed.eulerAngles += new Vector3(xSpeed, ySpeed, zSpeed) * Time.deltaTime;
+        [SerializeField] private float xSpeed = 0;
+        [SerializeField] private float ySpeed = 0;
+        [SerializeField] private float zSpeed = 0;
+        private Transform transformCashed;
+
+        void Awake()
+        {
+            transformCashed = transform;
+        }
+
+        void Update()
+        {
+            transformCashed.eulerAngles += new Vector3(xSpeed, ySpeed, zSpeed) * Time.deltaTime;
+        }
     }
 }

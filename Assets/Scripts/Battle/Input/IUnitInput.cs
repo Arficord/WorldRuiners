@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using My.Base.Battle;
 using UnityEngine;
 
-public interface IUnitInput
+namespace My.Base.Battle
 {
-    event Action<BattleUnit> OnNeedInput;
-    void PlayTurn(BattleManager battle, BattleUnit unit);
+    public interface IUnitInput
+    {
+        event Action<BattleUnit> OnNeedInput;
+        void PlayTurn(BattleManager battle, BattleUnit unit);
+    }
 }

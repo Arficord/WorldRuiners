@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType
+namespace My.Base.Units
 {
-    True,
-    Strike,
-    Slash,
-    Thrust,
-    Heat,
-    Cold,
-    Poison,
-    Bleeding,
+    public enum DamageType
+    {
+        True,
+        Strike,
+        Slash,
+        Thrust,
+        Heat,
+        Cold,
+        Poison,
+        Bleeding,
+    }
 }

@@ -2,34 +2,39 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using My.Base.Battle;
+using My.Base.Units;
 using UnityEngine;
 
-public class BattleFieldManager : MonoBehaviour
+namespace My.Base.Battle
 {
-    [SerializeField] private Transform[] firstTeamPoints;
-    [SerializeField] private Transform[] secondTeamPoints;
-
-    public Transform GetEmptyPlace(Team team)
+    public class BattleFieldManager : MonoBehaviour
     {
-        switch (team)
-        {
-            case Team.First:
-                return GetFirstEmptySpace(firstTeamPoints);
-            case Team.Second:
-                return GetFirstEmptySpace(secondTeamPoints);
-            default:
-                throw new InvalidEnumArgumentException($"case for {team} is undefined");
-        }
-    }
+        [SerializeField] private Transform[] firstTeamPoints;
+        [SerializeField] private Transform[] secondTeamPoints;
 
-    private Transform GetFirstEmptySpace(Transform[] points)
-    {
-        foreach (var point in points)
+        public Transform GetEmptyPlace(Team team)
         {
-            if (point.childCount > 0) continue;
-            return point;
+            switch (team)
+            {
+                case Team.First:
+                    return GetFirstEmptySpace(firstTeamPoints);
+                case Team.Second:
+                    return GetFirstEmptySpace(secondTeamPoints);
+                default:
+                    throw new InvalidEnumArgumentException($"case for {team} is undefined");
+            }
         }
-        Debug.Log($"No more empty space on field in {points[0].parent.name} object. Check it");
-        return null;
+
+        private Transform GetFirstEmptySpace(Transform[] points)
+        {
+            foreach (var point in points)
+            {
+                if (point.childCount > 0) continue;
+                return point;
+            }
+
+            Debug.Log($"No more empty space on field in {points[0].parent.name} object. Check it");
+            return null;
+        }
     }
 }

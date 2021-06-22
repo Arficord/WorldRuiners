@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using My.Base.Battle;
+using My.Base.Skills;
+using My.UI.InfoBlocks;
 using My.UI.Windows;
 using UnityEngine;
 

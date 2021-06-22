@@ -4,23 +4,26 @@ using My.Base.Battle;
 using My.Base.Units;
 using UnityEngine;
 
-public class UnitHudManager : MonoBehaviour
+namespace My.UI.InfoBlocks
 {
-    [SerializeField] private UnitHud hudPrefab;
-
-    public void Initialize(List<BattleUnit> units)
+    public class UnitHudManager : MonoBehaviour
     {
-        Camera camera = Camera.main;
-        foreach (var unit in units)
+        [SerializeField] private UnitHud hudPrefab;
+
+        public void Initialize(List<BattleUnit> units)
         {
-            SpawnHud(unit, camera);
+            Camera camera = Camera.main;
+            foreach (var unit in units)
+            {
+                SpawnHud(unit, camera);
+            }
         }
-    }
 
-    private void SpawnHud(BattleUnit unit, Camera camera)
-    {
-        Vector3 hudPosition = camera.WorldToScreenPoint(unit.GetBottomMarkPosition());
-        UnitHud hud = Instantiate(hudPrefab, hudPosition, Quaternion.identity, transform);
-        hud.Initialize(unit);
+        private void SpawnHud(BattleUnit unit, Camera camera)
+        {
+            Vector3 hudPosition = camera.WorldToScreenPoint(unit.GetBottomMarkPosition());
+            UnitHud hud = Instantiate(hudPrefab, hudPosition, Quaternion.identity, transform);
+            hud.Initialize(unit);
+        }
     }
 }
