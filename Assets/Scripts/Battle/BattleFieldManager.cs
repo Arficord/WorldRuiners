@@ -24,9 +24,10 @@ namespace My.Base.Battle
                     throw new InvalidEnumArgumentException($"case for {team} is undefined");
             }
         }
-
+        
         private Transform GetFirstEmptySpace(Transform[] points)
         {
+            //TODO: tempo realization. Replace searching in transform child
             foreach (var point in points)
             {
                 if (point.childCount > 0) continue;

@@ -13,12 +13,18 @@ namespace My.Base.Battle
 
         public void Initialize(List<BattleUnit> units)
         {
+            gameObject.SetActive(true);
             Transform transformCashed = transform;
             foreach (var unit in units)
             {
                 TimeFlowMark mark = Instantiate(timeFlowMarkPrefab, transformCashed);
                 mark.Initialize(unit, plankSize);
             }
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

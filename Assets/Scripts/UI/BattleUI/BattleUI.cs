@@ -23,6 +23,7 @@ namespace My.UI
         [SerializeField] private TimeFlowPlank timeFlowPlank;
         [SerializeField] private SkillCastingUI skillCastingUI;
         [SerializeField] private UnitHudManager unitHud;
+        [SerializeField] private BattleResultUI battleResultUI;
         private BattleManager battleManager;
         
         public event Action<BattleUnit> OnClickOnUnit;
@@ -49,6 +50,8 @@ namespace My.UI
         private void Awake()
         {
             unitInfoWindowTransform = unitInfoWindow.GetComponent<RectTransform>();
+            battleActionMenu.OnNeedToSelectTarget += ShowEnemyUnitTarget;
+            skillCastingUI.OnSkillCasted += FinishUseSkillCastingUI;
         }
 
         private void Update()
@@ -59,14 +62,20 @@ namespace My.UI
 
         public void Initialize(BattleManager battle)
         {
+            Debug.Log("BattleUI initialization started");
             gameObject.SetActive(true);
             battleManager = battle;
             state = UIState.Normal;
             timeFlowPlank.Initialize(battleManager.UnitsInBattle);
             battleActionMenu.Initialize(battleManager);
-            battleActionMenu.OnNeedToSelectTarget += ShowEnemyUnitTarget;
-            skillCastingUI.OnSkillCasted += FinishUseSkillCastingUI;
             unitHud.Initialize(battleManager.UnitsInBattle);
+            Debug.Log("BattleUI initialization finished");
+        }
+
+        public void ShowBattleResult(BattleResult result, Action<BattleResult> onBattleResultClosed)
+        {
+            timeFlowPlank.Hide();
+            battleResultUI.Show(result, onBattleResultClosed);
         }
 
         private void ShowEnemyUnitTarget(Skill ability)

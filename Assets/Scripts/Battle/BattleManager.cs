@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using My.Base.Units;
 using My.UI;
 using My.UI.Windows;
@@ -18,16 +19,18 @@ namespace My.Base.Battle
         private bool isWaitingForUnitPlay = false;
         private const float BATTLE_ACTION_TIME_CUP = 1000;
         private const float BATTLE_TICK_TIME = 0.1f;
-        
-        public void StartBattle(List<Unit> participants)
+        private Action<BattleResult> onBattleEndedCallback;
+        private Coroutine battleCycleCoroutine;
+
+        public void StartBattle(List<Unit> participants, Action<BattleResult> onBattleEnded)
         {
+            onBattleEndedCallback += onBattleEnded;
             PlayerUnitInput = new BattleUnitController();
             foreach (var unit in participants)
             {
                 SpawnUnit(unit);
             }
-            
-            StartCoroutine(BattleCycle());
+            battleCycleCoroutine = StartCoroutine(BattleCycle());
             battleUI.Initialize(this);
         }
 
@@ -64,6 +67,30 @@ namespace My.Base.Battle
             {
                 unit.IncreaseTimePlaceByParameters();
             }
+        }
+        
+        private void CheckBattleResult()
+        {
+            if (UnitsInBattle == null || UnitsInBattle.Count == 0)
+            {
+                Debug.Log("All units is dead");
+                DeclareBattleResult(Team.None, false);
+                return;
+            }
+            if (IsAllUnitsFromOneTeam())
+            {
+                Team remainedTeam = UnitsInBattle[0].UnitModel.RealTeam;
+                Debug.Log($"Only one team remains {remainedTeam}");
+                DeclareBattleResult(remainedTeam, false);
+            }
+        }
+
+        private void DeclareBattleResult(Team winner, bool isFlee)
+        {
+            BattleResult result = new BattleResult(winner, isFlee);
+            battleUI.ShowBattleResult(result, onBattleEndedCallback);
+            StopCoroutine(battleCycleCoroutine);
+            ClearBattle();
         }
 
         private bool TryToGiveTurnToUnit()
@@ -114,13 +141,33 @@ namespace My.Base.Battle
             battleUnit.Initialize(unit);
             battleUnit.PlayInput = PlayerUnitInput;
             UnitsInBattle.Add(battleUnit);
-            battleUnit.UnitModel.OnDie += () => DestroyUnit(battleUnit);
+            battleUnit.OnKilled += () => OnUnitDie(battleUnit);
         }
 
-        private void DestroyUnit(BattleUnit battleUnit)
+        private void OnUnitDie(BattleUnit battleUnit)
         {
             UnitsInBattle.Remove(battleUnit);
-            battleUnit.PlayDieAnimation();
+            CheckBattleResult();
+        }
+
+        private void RemoveUnit(BattleUnit battleUnit)
+        {
+            UnitsInBattle.Remove(battleUnit);
+            battleUnit.Remove();
+        }
+
+        private void ClearBattle()
+        {
+            while (UnitsInBattle.Count > 0)
+            {
+                RemoveUnit(UnitsInBattle[0]);
+            }
+        }
+        
+        private bool IsAllUnitsFromOneTeam()
+        {
+            Team firstUnitTeam = UnitsInBattle[0].UnitModel.RealTeam;
+            return UnitsInBattle.All(unit => firstUnitTeam == unit.UnitModel.RealTeam);
         }
     }
 }

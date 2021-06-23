@@ -6,6 +6,7 @@ namespace My.Base.Units
 {
     public enum Team
     {
+        None,
         First,
         Second,
     }

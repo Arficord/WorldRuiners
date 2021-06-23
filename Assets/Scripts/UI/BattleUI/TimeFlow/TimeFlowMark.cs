@@ -31,7 +31,7 @@ namespace My.Base.Battle
             battleUnit.OnBattleActionTimeChanged += UpdatePosition;
             battleUnit.OnThisUnitSelectedView += MarkAsSelected;
             battleUnit.OnThisUnitUnselectedView += MarkAsUnselected;
-            battleUnit.UnitModel.OnDie += PlayDestroyAnimation;
+            battleUnit.OnDestroyed += PlayDestroyAnimation;
         }
 
         private void UpdatePosition()
@@ -53,6 +53,11 @@ namespace My.Base.Battle
             timeEventNameText.color = normalColor;
         }
         
+        private void PlayDestroyAnimation()
+        {
+            Destroy(gameObject);
+        }
+        
         private void OnDestroy()
         {
             //if not instantiated
@@ -63,11 +68,6 @@ namespace My.Base.Battle
             battleUnit.OnBattleActionTimeChanged -= UpdatePosition;
             battleUnit.OnThisUnitSelectedView -= MarkAsSelected;
             battleUnit.OnThisUnitUnselectedView -= MarkAsUnselected;
-        }
-        
-        private void PlayDestroyAnimation()
-        {
-            Destroy(gameObject);
         }
     }
 }

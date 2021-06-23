@@ -21,7 +21,7 @@ namespace My.UI.InfoBlocks
             UpdateHP();
             UpdateMP();
             UpdateSP();
-            unitModel.OnDie += PlayDestroyAnimation;
+            unit.OnDestroyed += PlayDestroyAnimation;
         }
 
         private void UpdateHP()
