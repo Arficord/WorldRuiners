@@ -73,7 +73,7 @@ namespace My.Base.Units
             UnitTypes type = UnitTypes.TestMage;
             Unit unit = new Unit(name, level, attributes, type, team);
             unit.Skills.Add(new PhysicalAttackSkill());
-            unit.Skills.Add(new MagicAttackSkill());
+            unit.Skills.Add(new HealSkill());
             return unit;
         }
         

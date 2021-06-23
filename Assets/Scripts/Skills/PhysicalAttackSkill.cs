@@ -7,8 +7,6 @@ namespace My.Base.Skills
 {
     public class PhysicalAttackSkill : Skill
     {
-        //public override int ManualTargetAmount { get; protected set; } = 1;
-
         public override bool IsPossibleTarget(Unit caster, Unit target)
         {
             return caster.MindedTeam != target.RealTeam;
@@ -17,7 +15,7 @@ namespace My.Base.Skills
         public override string GetNameKey()
         {
             //TODO: replace with translation key
-            return "PUNCH_SKILL_NAME";
+            return "Punch";
         }
 
         public override string GetDescriptionKey()

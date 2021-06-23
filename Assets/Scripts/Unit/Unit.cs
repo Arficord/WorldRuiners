@@ -48,8 +48,8 @@ namespace My.Base.Units
             if (healAmount + CurrentAttributes.Health > BaseAttributes.Health)
             {
                 CurrentAttributes.Health = BaseAttributes.Health;
+                return;
             }
-
             CurrentAttributes.Health += healAmount;
         }
 
