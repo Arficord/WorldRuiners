@@ -17,6 +17,7 @@ namespace My.Base.Units
         public UnitAttributes CurrentAttributes { get; }
         public event Action OnDie;
         public event Action<Damage> OnGetDamage;
+        public event Action<float> OnGetHealth;
         
         public List<Skill> Skills { get; } = new List<Skill>();
 
@@ -47,9 +48,11 @@ namespace My.Base.Units
             Debug.Log($"{Name} received {healAmount} health!");
             if (healAmount + CurrentAttributes.Health > BaseAttributes.Health)
             {
+                OnGetHealth?.Invoke(BaseAttributes.Health - CurrentAttributes.Health);
                 CurrentAttributes.Health = BaseAttributes.Health;
                 return;
             }
+            OnGetHealth?.Invoke(healAmount);
             CurrentAttributes.Health += healAmount;
         }
 

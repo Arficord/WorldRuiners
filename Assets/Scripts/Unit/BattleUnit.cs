@@ -45,6 +45,7 @@ namespace My.Base.Battle
             UnitModel = unitModel;
             unitModel.OnDie += PlayDieAnimation;
             unitModel.OnGetDamage += OnGetDamage;
+            unitModel.OnGetHealth += OnGetHealth;
             //TODO: Must be calculated from parameters and relationship 
             IsPlayerCanControl = true;
         }
@@ -105,6 +106,12 @@ namespace My.Base.Battle
             //TODO: spawn floating damage text
             PlayGetDamageAnimation();
         }
+
+        private void OnGetHealth(float health)
+        {
+            //TODO: spawn floating damage text
+            PlayGetHealthAnimation();
+        }
         
         private void PlayGetDamageAnimation()
         {
@@ -113,6 +120,14 @@ namespace My.Base.Battle
                 () => spriteRenderer.DOColor(Color.white, 0.1f));
         }
 
+        private void PlayGetHealthAnimation()
+        {
+            //TODO: replace sample animation
+            spriteRenderer.DOColor(Color.green, 0.1f).OnComplete(
+                () => spriteRenderer.DOColor(Color.white, 0.1f));
+        }
+
+        
         private void OnDieAnimationEnded()
         {
             Remove();
@@ -122,6 +137,7 @@ namespace My.Base.Battle
         {
             UnitModel.OnDie -= PlayDieAnimation;
             UnitModel.OnGetDamage -= OnGetDamage;
+            UnitModel.OnGetHealth -= OnGetHealth;
         }
     }
 }
