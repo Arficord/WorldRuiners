@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using My.Base.Units;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -42,6 +43,7 @@ namespace My.Base.Battle
         {
             UnitModel = unitModel;
             unitModel.OnDie += PlayDieAnimation;
+            unitModel.OnGetDamage += OnGetDamage;
             //TODO: Must be calculated from parameters and relationship 
             IsPlayerCanControl = true;
         }
@@ -85,7 +87,8 @@ namespace My.Base.Battle
         public void PlayDieAnimation()
         {
             OnKilled?.Invoke();
-            Remove();
+            //TODO: replace sample animation
+            spriteRenderer.DOColor(Color.black, 0.2f).OnComplete(OnDieAnimationEnded);
         }
 
         public void Remove()
@@ -94,9 +97,28 @@ namespace My.Base.Battle
             Destroy(gameObject);
         }
 
+        private void OnGetDamage(Damage damage)
+        {
+            //TODO: spawn floating damage text
+            PlayGetDamageAnimation();
+        }
+        
+        private void PlayGetDamageAnimation()
+        {
+            //TODO: replace sample animation
+            spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(
+                () => spriteRenderer.DOColor(Color.white, 0.1f));
+        }
+
+        private void OnDieAnimationEnded()
+        {
+            Remove();
+        }
+        
         private void OnDestroy()
         {
             UnitModel.OnDie -= PlayDieAnimation;
+            UnitModel.OnGetDamage -= OnGetDamage;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace My.Base.Units
         public UnitAttributes BaseAttributes { get; }
         public UnitAttributes CurrentAttributes { get; }
         public event Action OnDie;
+        public event Action<Damage> OnGetDamage;
         
         public List<Skill> Skills { get; } = new List<Skill>();
 
@@ -34,6 +35,7 @@ namespace My.Base.Units
         {
             Debug.Log($"{Name} received {damage.Value} {damage.Type} damage!");
             CurrentAttributes.Health -= damage.Value;
+            OnGetDamage?.Invoke(damage);
             if (CurrentAttributes.Health <= 0)
             {
                 Die();
