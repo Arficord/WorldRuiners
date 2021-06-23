@@ -1649,7 +1649,7 @@ GameObject:
   - component: {fileID: 1246072844}
   - component: {fileID: 1246072845}
   m_Layer: 0
-  m_Name: StoryPloter
+  m_Name: StoryPlotter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

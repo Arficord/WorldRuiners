@@ -62,7 +62,7 @@ namespace My.Base.Battle
         
         private void OnDestroy()
         {
-            //if not instantiated
+            //if not initialized
             if (battleUnit == null)
             {
                 return;

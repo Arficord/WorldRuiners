@@ -26,7 +26,7 @@ namespace My.Base.Battle
 
         public void StartBattle(List<Unit> participants, Action<BattleResult> onBattleEnded)
         {
-            onBattleEndedCallback += onBattleEnded;
+            onBattleEndedCallback = onBattleEnded;
             PlayerUnitInput = new BattleUnitController();
             foreach (var unit in participants)
             {
@@ -90,9 +90,8 @@ namespace My.Base.Battle
         private void DeclareBattleResult(Team winner, bool isFlee)
         {
             BattleResult result = new BattleResult(winner, isFlee);
-            battleUI.ShowBattleResult(result, onBattleEndedCallback);
+            battleUI.ShowBattleResult(result, OnBattleEnded);
             StopCoroutine(battleCycleCoroutine);
-            ClearBattle();
         }
 
         private bool TryToGiveTurnToUnit()
@@ -152,6 +151,12 @@ namespace My.Base.Battle
             CheckBattleResult();
         }
 
+        private void OnBattleEnded(BattleResult result)
+        {
+            onBattleEndedCallback?.Invoke(result);
+            ClearBattle();
+        }
+
         private void RemoveUnit(BattleUnit battleUnit)
         {
             UnitsInBattle.Remove(battleUnit);
@@ -164,8 +169,9 @@ namespace My.Base.Battle
             {
                 RemoveUnit(UnitsInBattle[0]);
             }
+            battleUI.Hide();
         }
-        
+
         private bool IsAllUnitsFromOneTeam()
         {
             Team firstUnitTeam = UnitsInBattle[0].UnitModel.RealTeam;

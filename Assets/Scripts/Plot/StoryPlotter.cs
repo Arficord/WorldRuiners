@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace My.Base.Plot
 {
-    public class StoryPloter : MonoBehaviour
+    public class StoryPlotter : MonoBehaviour
     {
         [SerializeField] private BattleManager battleManager;
         //TODO: tempo remove
@@ -30,10 +30,10 @@ namespace My.Base.Plot
         {
             battleManager.StartBattle(participants, ProceedBattleResults);
         }
-
+        
         private void ProceedBattleResults(BattleResult result)
         {
-            Debug.Log($"Story Ploter received battle result. The winner is {result.Winner} team");
+            Debug.Log($"Story Plotter received battle result. The winner is {result.Winner} team");
             battleStartUI.gameObject.SetActive(true);
         }
     }

@@ -72,6 +72,11 @@ namespace My.UI
             Debug.Log("BattleUI initialization finished");
         }
 
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+        
         public void ShowBattleResult(BattleResult result, Action<BattleResult> onBattleResultClosed)
         {
             timeFlowPlank.Hide();

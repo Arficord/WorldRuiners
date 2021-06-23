@@ -18,10 +18,15 @@ public class BattleResultUI : MonoBehaviour
     public void Show(BattleResult result, Action<BattleResult> onWindowClose)
     {
         winnerProclamationText.text = $"{result.Winner.ToString()} team is the winner!";
-        CloseButton.onClick.AddListener(()=> onWindowClose(result));
+        onClose = () => onWindowClose(result);
         gameObject.SetActive(true);
     }
 
+    private void OnCloseButtonClick()
+    {
+        Hide();
+    }
+    
     private void Hide()
     {
         gameObject.SetActive(false);
