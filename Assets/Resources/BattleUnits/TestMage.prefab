@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CurrentUnitMarker
       objectReference: {fileID: 0}
+    - target: {fileID: 3286319269351803803, guid: 98aef0d1253018f41b82e520eb510018,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.63
+      objectReference: {fileID: 0}
     - target: {fileID: 5440219202095763226, guid: 98aef0d1253018f41b82e520eb510018,
         type: 3}
       propertyPath: m_LocalPosition.y

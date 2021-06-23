@@ -12,6 +12,7 @@ namespace My.Base.Battle
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private GameObject targetMark;
+        [SerializeField] private GameObject selectRing;
         [SerializeField] private Transform bottomPoint;
         public event Action OnDestroyed;
         public event Action OnKilled;
@@ -50,12 +51,14 @@ namespace My.Base.Battle
 
         public void PlayTurn(BattleManager battle)
         {
+            selectRing.SetActive(true);
             OnThisUnitTurnStarted?.Invoke();
             PlayInput?.PlayTurn(battle, this);
         }
 
         public void EndTurn()
         {
+            selectRing.SetActive(false);
             OnThisUnitTurnEnded?.Invoke();
         }
 
