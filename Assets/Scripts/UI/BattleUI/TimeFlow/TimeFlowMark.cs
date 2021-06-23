@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using My.Base.Units;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace My.Base.Battle
         private RectTransform rectTransform;
         private float maxPosition;
         private BattleUnit battleUnit;
+        private Tween moveTween;
 
         private void Awake()
         {
@@ -38,7 +40,7 @@ namespace My.Base.Battle
         {
             float timePosition = battleUnit.BattleActionTime;
             float newXPosition = maxPosition < timePosition ? maxPosition : timePosition;
-            rectTransform.anchoredPosition = new Vector2(newXPosition, 0);
+            moveTween = rectTransform.DOAnchorPosX(newXPosition, BattleManager.BATTLE_TICK_TIME);
         }
 
         private void MarkAsSelected()
@@ -65,6 +67,8 @@ namespace My.Base.Battle
             {
                 return;
             }
+
+            moveTween.Kill();
             battleUnit.OnBattleActionTimeChanged -= UpdatePosition;
             battleUnit.OnThisUnitSelectedView -= MarkAsSelected;
             battleUnit.OnThisUnitUnselectedView -= MarkAsUnselected;

@@ -17,9 +17,9 @@ namespace My.Base.Plot
         public void InitTestBattle()
         {
             List<Unit> participants = new List<Unit>();
-            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestMage, 500, Team.First));
-            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 520, Team.First));
-            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestTank, 560, Team.First));
+            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestMage, 50, Team.First));
+            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 52, Team.First));
+            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestTank, 56, Team.First));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestMage, 2, Team.Second));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 30, Team.Second));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestTank, 80, Team.Second));

@@ -13,12 +13,14 @@ namespace My.Base.Battle
     {
         [SerializeField] private BattleUI battleUI;
         [SerializeField] private BattleFieldManager battleField;
+        
+        public const float BATTLE_ACTION_TIME_CUP = 1000;
+        public const float BATTLE_TICK_TIME = 0.1f;
+        
         public IUnitInput PlayerUnitInput;
         public List<BattleUnit> UnitsInBattle { get; private set; } = new List<BattleUnit>();
         public BattleUnit CurrentTurnUnit { get; private set; } = null;
         private bool isWaitingForUnitPlay = false;
-        private const float BATTLE_ACTION_TIME_CUP = 1000;
-        private const float BATTLE_TICK_TIME = 0.1f;
         private Action<BattleResult> onBattleEndedCallback;
         private Coroutine battleCycleCoroutine;
 
