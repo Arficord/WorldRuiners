@@ -21,7 +21,7 @@ namespace My.Base.Plot
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 52, Team.First));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestTank, 56, Team.First));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestMage, 2, Team.Second));
-            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 30, Team.Second));
+            participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestWarrior, 37, Team.Second));
             participants.Add(UnitFactory.GetNewUnit(UnitTypes.TestTank, 80, Team.Second));
             InitBattle(participants);
         }
